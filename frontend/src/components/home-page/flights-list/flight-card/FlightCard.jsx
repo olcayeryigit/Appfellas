@@ -17,7 +17,7 @@ const FlightCard = ({
   airline,
 }) => {
   return (
-    <div className="my-4">
+    <div className="">
       <div className="flight-card">
         <h5 className="ps-3 pt-3">
           {from} to {to}

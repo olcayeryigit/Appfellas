@@ -6,7 +6,13 @@ import Topbar from "./topbar/TopBar";
 import SearchBar from "./search-bar/SearchBar";
 import Right from "./right/Right";
 import SearchBox from "./search-box/SearchBox";
-import Flights from "./flights/Flights";
+import FlightsList from "./flights-list/FlightList";
+
+const images = [
+  { src: "/images/img-1.jpg" },
+  { src: "/images/img-2.jpg" },
+  { src: "/images/img-3.webp" },
+];
 
 const HomePage = () => {
   return (
@@ -17,9 +23,9 @@ const HomePage = () => {
           <Col md={9}>
             <SearchBox />
 
-            <Row className="m-0">
+            <Row className="m-0 mt-5">
               <Col md={8} className="p-0">
-                <Flights />
+            <FlightsList/>
               </Col>
               <Col md={4} className="p-0 mt-4">
                 <SearchBar />
@@ -27,8 +33,8 @@ const HomePage = () => {
             </Row>
           </Col>
 
-          <Col md={2}>
-            <Right />
+          <Col md={3}>
+            <Right images={images}/>
           </Col>
         </Row>
       </Container>

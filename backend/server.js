@@ -1,51 +1,43 @@
 const express = require('express');
-const cors = require('cors');
 const axios = require('axios');
+const cors = require('cors');
+
 const app = express();
+const port = 5000; // Sunucu portu
 
-// CORS ayarlarını yapılandırma
-app.use(cors({
-  origin: 'http://localhost:5173', // Frontend adresiniz
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-}));
+app.use(cors()); // CORS sorunlarını çözmek için
 
-// JSON verilerini işlemek için middleware
-app.use(express.json());
-
-// API anahtarı ve uygulama ID'nizi burada saklayın
-const APP_ID = 'faf15705';
-const APP_KEY = '92757bec9ed511e6d2e3cb5e6eab23d2';
-
-// Uçuş verilerini almak için API endpoint
+// Uçuş verilerini çeken API route
 app.get('/api/flights', async (req, res) => {
-  try {
-    // Schiphol API URL ve parametreler
-    const url = 'https://api.schiphol.nl/public-flights/flights';
-    const response = await axios.get(url, {
-      params: {
-        includedelays: false,
-        page: 0,
-        sort: '+scheduleTime'
-      },
-      headers: {
-        'Accept': 'application/json',
-        'app_id': APP_ID,
-        'app_key': APP_KEY,
-        'ResourceVersion': 'v4'
-      }
-    });
+  const { page = 0 } = req.query; // Sayfa numarasını al
 
-    // Uçuş verilerini döndürme
-    res.json(response.data);
+  try {
+    const response = await axios.get(
+      `https://api.schiphol.nl/public-flights/flights?includedelays=false&page=${page}&sort=%2BscheduleTime`,
+      {
+        headers: {
+          Accept: 'application/json',
+          app_id: 'faf15705',
+          app_key: '92757bec9ed511e6d2e3cb5e6eab23d2',
+          ResourceVersion: 'v4',
+        },
+      }
+    );
+
+    // flights verisini alıyoruz
+    const flights = response.data.flights || [];  // flights dizisini al
+
+    // Sayfalandırma link başlığını alıyoruz
+    const linkHeader = response.headers.link || null;
+
+    // Uçuş verilerini ve linkHeader'ı frontend'e yolluyoruz
+    res.json({ flights, linkHeader });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'An error occurred while fetching flight data.' });
+    console.error('Error fetching flights:', error);
+    res.status(500).json({ error: 'Unable to fetch flights' });
   }
 });
 
-// Sunucuyu dinlemeye başlama
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+app.listen(port, () => {
+  console.log(`Server running on http://localhost:${port}`);
 });

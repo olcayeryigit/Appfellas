@@ -1,0 +1,32 @@
+.flight-card {
+  background-color: var(--color5);
+  border-radius: 10px 10px 10px 0px;
+}
+
+.check-button {
+  background-color: var(--color7) !important;
+  color: var(--color1) !important;
+  border: 0 !important;
+  border-radius: 0 0 7px 7px !important;
+  text-decoration: underline !important;
+}
+
+.book-button {
+  background-color: var(--color1) !important;
+  color: var(--color5) !important;
+  border: 0 !important;
+  border-radius: 10px 0 10px 0px !important;
+}
+
+.price {
+  color: var(--color1);
+}
+
+.airlines-icon {
+  width: 40px;
+  height: auto;
+}
+
+.flight-icon {
+    color: var(--color1);
+}

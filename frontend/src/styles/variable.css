@@ -1,0 +1,55 @@
+/* COLOR PALETTES */
+:root {
+  --color1: #4b0097;
+  --color2: #f6f4f8;
+  --color3: #e7dcff;
+  --color4: #000000;
+  --color5: #ffffff;
+  --color6: #E1E1E1;
+  --color7: #E6E0EB;
+
+  /* OPACITY COLORS */
+  --color1-opacity-75: rgba(177, 52, 50, 0.75); /* $color1 converted to rgba */
+  --color1-opacity-50: rgba(177, 52, 50, 0.5);
+  --color1-opacity-25: rgba(177, 52, 50, 0.25);
+
+  --color2-opacity-50: rgba(221, 0, 0, 0.5); /* $color2 converted to rgba */
+  --color2-opacity-25: rgba(221, 0, 0, 0.25);
+
+
+  /* FONT SIZES */
+  --font-size-1: 0.5rem; /* ˜8px */
+  --font-size-2: 0.75rem; /* ˜12px */
+  --font-size-3: 0.85rem; /* ˜14px */
+  --font-size-4: 1rem; /* 16px */
+  --font-size-5: 1.2rem; /* ˜19px */
+  --font-size-6: 1.5rem; /* 24px */
+  --font-size-7: 2rem; /* 32px */
+}
+
+/*
+h1 {
+  font-size: 1.7rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+}
+
+h3 {
+  font-size: 1.2rem;
+}
+
+h4 {
+  font-size: 1rem;
+}
+
+
+
+p {
+  font-size: 1rem;
+}
+  
+small {
+  font-size: var(--font-size-2); /* Küçük metin için 
+}*/

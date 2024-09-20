@@ -1,0 +1,13 @@
+/* Radio buttonların aktif ve focus durumundaki varsayılan stilleri kaldırma */
+.form-check-input:focus,
+.form-check-input:active {
+  outline: none;
+  box-shadow: none;
+  border-color: transparent;
+}
+
+/* Aktif olduğunda border ve gölgeyi kaldırma */
+.form-check-input:checked {
+  box-shadow: none;
+  border-color: transparent;
+}

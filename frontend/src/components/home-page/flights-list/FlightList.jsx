@@ -15,6 +15,7 @@ const FlightsList = () => {
     setError(null);
     try {
       const data = await fetchFlights(page); // Sayfaya göre uçuş verilerini çek
+      console.log(data);
       setFlights(data.flights || []);
       const totalPages = parseLinkHeader(data.linkHeader); // Toplam sayfa sayısını al
       setTotalPages(totalPages);
@@ -50,8 +51,8 @@ const FlightsList = () => {
               from={flight.route.destinations[0] || 'Bilinmiyor'}
               to={flight.prefixICAO || 'Bilinmiyor'}
               price={`$${flight.flightNumber}`}
-              departureTime={flight.scheduleTime || 'Bilinmiyor'}
-              arrivalTime={flight.estimatedLandingTime || 'Bilinmiyor'}
+              departureTime={flight.scheduleDateTime || 'Bilinmiyor'}
+              arrivalTime={flight.estimatedLandingTime|| 'Bilinmiyor'}
               airline={flight.airlineCode || 'Bilinmiyor'}
             />
           ))}

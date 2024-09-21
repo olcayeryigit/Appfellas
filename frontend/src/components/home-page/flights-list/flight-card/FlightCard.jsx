@@ -1,9 +1,9 @@
 import React from "react";
 import "./flight-card.css";
 import {
-  formatScheduleTime,
   calculateTimeDifference,
-  formatEstimatedTime,
+  formatDateTimeTo12Hour,
+  parse12HourTimeTo24Hour
 } from "../../../../helpers/timeUtils";
 import { TbPlaneArrival, TbPlaneDeparture } from "react-icons/tb";
 import { Button, Card, Col, Row } from "react-bootstrap";
@@ -16,6 +16,17 @@ const FlightCard = ({
   arrivalTime,
   airline,
 }) => {
+
+
+
+const formatDepartureTime=formatDateTimeTo12Hour(departureTime);
+console.log(formatDepartureTime);
+const formatArrivalTime=formatDateTimeTo12Hour(arrivalTime);
+console.log(formatArrivalTime);
+const dateDepartureTime=parse12HourTimeTo24Hour(formatDepartureTime);
+const dateArrivalTime= parse12HourTimeTo24Hour(formatArrivalTime);
+const timeDifference=calculateTimeDifference(departureTime,arrivalTime);
+console.log(timeDifference)
   return (
     <div className="">
       <div className="flight-card">
@@ -29,7 +40,7 @@ const FlightCard = ({
               <TbPlaneDeparture />
               <div>Departure</div>
             </div>
-            <div className="fw-bold">{formatScheduleTime(departureTime)}</div>
+            <div className="fw-bold">{formatDepartureTime}</div>
             <div>{from}</div>
           </div>
 
@@ -42,10 +53,7 @@ const FlightCard = ({
          <div className="flight-icon"><IoAirplaneSharp/>
          </div>
             <div>
-              {calculateTimeDifference(
-                formatScheduleTime(departureTime),
-                formatEstimatedTime(arrivalTime)
-              )}
+              {timeDifference}
             </div>
           </div>
 
@@ -58,7 +66,7 @@ const FlightCard = ({
               <TbPlaneArrival />
               <div> Arrival</div>
             </div>
-            <div className="fw-bold">{formatEstimatedTime(arrivalTime)}</div>
+            <div className="fw-bold">{formatArrivalTime}</div>
             <div>{to}</div>
           </div>
         </div>

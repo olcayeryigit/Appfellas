@@ -1,71 +1,69 @@
-.bg-3{
-    background-color: var(--color5) ;
-}
 
-.bg-4{
-    background-color:var(--color1) !important;
-}
-
-.trip-options-1{
-    background-color: var(--color1) !important;
-    border-radius: 40px 0 0 40px !important;
-border: none !important;
-
-}
-
-.trip-options-2{
-    background-color:var(--color6)  !important;
-    border-radius: 0 40px 40px 0!important;
-    color: var(--color1)  !important;
-    border: none !important;
-
-}
-
-.text-color-1{
-    color: var(--color1) !important;
-}
-
-.input-group{
-
+.color-1{
+    color:var(--color1) !important;
 }
 
 
-.input-group-text{
-background: var(--color5)  !important;
-border-top:2px solid var(--color6) !important;
-border-bottom:2px solid var(--color6) !important;
-
+.bg-3 {
+  background-color: var(--color5);
 }
 
-.input-group-text-1{
-border-left:2px solid var(--color6) !important;
-border-right: 0 !important;
-border-radius: 40px 0 0 40px !important;
+.bg-4 {
+  background-color: var(--color1) !important;
 }
-
-
-.input-1{
-    border-radius: 0px !important;
-    border-right:2px solid var(--color6) !important;
-    border-top:2px solid var(--color6) !important;
-    border-bottom:2px solid var(--color6)!important;
-border-left: 0 !important;
-
-
-}
-
-.input-group-text-2{
-    border-right:2px solid var(--color6) !important;
-    border-left: 0 !important;
-    border-radius: 0 40px 40px 0!important;
-
+.bg-6 {
+  background-color: var(--color6) !important;
 }
 
 
-.input-2{
-    border-radius: 0px !important;
-    border-left:2px solid var(--color6)!important;
-    border-top:2px solid var(--color6)!important;
-    border-bottom:2px solid var(--color6) !important;
-    border-right: 0 !important;
+
+.trip-options-1 {
+  border-radius: 40px 0 0 40px !important;
+  border: none !important;
+}
+
+.trip-options-2 {
+  border-radius: 0 40px 40px 0 !important;
+  border: none !important;
+}
+
+.text-color-1 {
+  color: var(--color1) !important;
+}
+
+.input-group {
+}
+
+.input-group-text {
+  background: var(--color5) !important;
+  border-top: 2px solid var(--color6) !important;
+  border-bottom: 2px solid var(--color6) !important;
+}
+
+.input-group-text-1 {
+  border-left: 2px solid var(--color6) !important;
+  border-right: 0 !important;
+  border-radius: 40px 0 0 40px !important;
+}
+
+.input-1 {
+  border-radius: 0px !important;
+  border-right: 2px solid var(--color6) !important;
+  border-top: 2px solid var(--color6) !important;
+  border-bottom: 2px solid var(--color6) !important;
+  border-left: 0 !important;
+}
+
+.input-group-text-2 {
+  border-right: 2px solid var(--color6) !important;
+  border-left: 0 !important;
+  border-radius: 0 40px 40px 0 !important;
+}
+
+.input-2 {
+  border-radius: 0px !important;
+  border-left: 2px solid var(--color6) !important;
+  border-top: 2px solid var(--color6) !important;
+  border-bottom: 2px solid var(--color6) !important;
+  border-right: 0 !important;
 }

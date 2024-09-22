@@ -6,7 +6,7 @@ import Topbar from "./topbar/TopBar";
 import SearchBar from "./search-bar/SearchBar";
 import Right from "./right/Right";
 import SearchBox from "./search-box/SearchBox";
-import FlightsList from "./flights-list/FlightList";
+import FlightList from "./flights-list/FlightList";
 
 const images = [
   { src: "/images/img-1.jpg" },
@@ -25,7 +25,7 @@ const HomePage = () => {
 
             <Row className="m-0 mt-5">
               <Col md={8} className="p-0">
-            <FlightsList/>
+            <FlightList/>
               </Col>
               <Col md={4} className="p-0 mt-4">
                 <SearchBar />

@@ -1,154 +1,91 @@
-import React, { useState, useEffect } from 'react';
-import { fetchFlights } from '../../../api/api'; // API'den uçuş verilerini çeken fonksiyon
-import FlightCard from './flight-card/FlightCard'; // Uçuş kartı bileşeni
-import './flights-list.css'; // CSS dosyanız
+import axios from "axios";
+import { useContext, useEffect, useState } from "react";
+import StoreContext from "../../../store";
 
-const FlightsList = () => {
-  const [flights, setFlights] = useState([]); // Uçuş verileri
-  const [loading, setLoading] = useState(true); // Yükleniyor durumu
-  const [error, setError] = useState(null); // Hata durumu
-  const [currentPage, setCurrentPage] = useState(1); // Mevcut sayfa
-  const [totalPages, setTotalPages] = useState(0); // Toplam sayfa sayısı
+const FlightList = () => {
+  const { direction, setDirection } = useContext(StoreContext);
+  const [flights, setFlights] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [linkHeader, setLinkHeader] = useState("");
 
-  const fetchData = async (page) => {
+  const fetchFlights = async (page = 0) => {
     setLoading(true);
-    setError(null);
     try {
-      const data = await fetchFlights(page); // Sayfaya göre uçuş verilerini çek
-      console.log(data);
-      setFlights(data.flights || []);
-      const totalPages = parseLinkHeader(data.linkHeader); // Toplam sayfa sayısını al
-      setTotalPages(totalPages);
+      const response = await axios.get('http://localhost:5000/api/flights', {
+        params: {
+          page: page,
+          direction: direction 
+        }
+      });
+      setFlights(response.data.flights);
+      setLinkHeader(response.data.linkHeader);
     } catch (error) {
-      setError('Uçuşlar alınırken hata oluştu. Lütfen tekrar deneyin.');
+      console.error('Error fetching flights:', error);
     } finally {
       setLoading(false);
     }
   };
 
-  const parseLinkHeader = (linkHeader) => {
-    const links = linkHeader.split(',').map(link => link.trim());
-    const lastLink = links.find(link => link.includes('rel="last"'));
-    const match = lastLink.match(/page=(\d+)/);
-    return match ? parseInt(match[1]) : 0;
+  useEffect(() => {
+    fetchFlights(); // Varsayılan olarak sayfa 0 ile verileri çek
+  }, [direction]);
+
+  const handlePageChange = (newPage) => {
+    fetchFlights(newPage); // Sayfa değiştiğinde verileri çek
   };
 
-  useEffect(() => {
-    fetchData(currentPage); // Bileşen yüklendiğinde verileri çek
-  }, [currentPage]);
+  const renderPagination = () => {
+    if (linkHeader) {
+      const links = linkHeader.split(', ');
+      let nextPage = null;
+      let prevPage = null;
+
+      links.forEach(link => {
+        if (link.includes('rel="next"')) {
+          nextPage = getPageNumber(link);
+        } else if (link.includes('rel="prev"')) {
+          prevPage = getPageNumber(link);
+        }
+      });
+
+      return (
+        <div>
+          {prevPage && <button onClick={() => handlePageChange(prevPage)}>Önceki</button>}
+          {nextPage && <button onClick={() => handlePageChange(nextPage)}>Sonraki</button>}
+        </div>
+      );
+    }
+    return null;
+  };
+
+  const getPageNumber = (link) => {
+    const url = link.split(';')[0].slice(1, -1); // URL'yi al
+    const params = new URLSearchParams(url.split('?')[1]);
+    return params.get('page'); // Sayfa numarasını döndür
+  };
 
   return (
     <div>
       {loading ? (
         <p>Yükleniyor...</p>
-      ) : error ? (
-        <p>{error}</p>
-      ) : flights.length > 0 ? (
-        <div className="scroll-container">
-          {flights.map((flight) => (
-            <FlightCard
-              key={flight.id}
-              from={flight.route.destinations[0] || 'Bilinmiyor'}
-              to={flight.prefixICAO || 'Bilinmiyor'}
-              price={`$${flight.flightNumber}`}
-              departureTime={flight.scheduleDateTime || 'Bilinmiyor'}
-              arrivalTime={flight.estimatedLandingTime|| 'Bilinmiyor'}
-              airline={flight.airlineCode || 'Bilinmiyor'}
-            />
-          ))}
-        </div>
       ) : (
-        <p>Uçuş bulunamadı.</p>
+        <ul>
+          {flights.length > 0 ? (
+            flights.map((flight, index) => (
+              <li key={index}>
+                <strong>Uçuş Numarası:</strong> {flight.flightNumber} - 
+                <strong> Uçuş Yönü:</strong> {flight.flightDirection} -
+                <strong> Kalkış Zamanı:</strong> {flight.scheduleTime}
+              </li>
+            ))
+          ) : (
+            <p>Uçuş bulunamadı.</p>
+          )}
+        </ul>
       )}
-
-      {/* Sayfalamayı kontrol et */}
-      <div>
-        <button 
-          onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))} 
-          disabled={currentPage === 1}
-        >
-          Önceki
-        </button>
-        <span>{currentPage} / {totalPages}</span>
-        <button 
-          onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))} 
-          disabled={currentPage === totalPages}
-        >
-          Sonraki
-        </button>
-      </div>
+      {renderPagination()} {/* Sayfalandırma düğmelerini render et */}
     </div>
   );
 };
 
-export default FlightsList;
-
-
-
-
-
-
-
-
-/*// FlightsList.js
-import React, { useState, useEffect } from 'react';
-import { fetchFlights } from '../../../api/api';
-import FlightCard from './flight-card/FlightCard';
-import './flights-list.css'; // CSS dosyanızı import edin
-
-const FlightsList = () => {
-  const [flights, setFlights] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await fetchFlights(); // Sayfa parametresini düzenleyin
-        console.log(data);
-        setFlights(data.flights || []);
-      } catch (error) {
-        setError('Error fetching flights. Please try again later.');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-
-useEffect(()=>{
-  console.log(flights)
-},[flights])
-
-  return (
-    <div>
-      {loading ? (
-        <p>Loading...</p>
-      ) : error ? (
-        <p>{error}</p>
-      ) : flights.length > 0 ? (
-        <div className="scroll-container">
-          {flights.map((flight) => (
-            <FlightCard
-              key={flight.id}
-              from={flight.route.destinations[0] || 'Unknown'}
-              to={flight.prefixICAO || 'Unknown'}
-              price={`$${flight.flightNumber}`}
-              departureTime={flight.scheduleTime || 'Unknown'}
-              arrivalTime={flight.estimatedLandingTime || 'Unknown'}
-              airline={flight.airlineCode || 'Unknown'}
-            />
-          ))}
-        </div>
-      ) : (
-        <p>No flights available</p>
-      )}
-    </div>
-  );
-};
-
-export default FlightsList;*/
-
-
+export default FlightList;

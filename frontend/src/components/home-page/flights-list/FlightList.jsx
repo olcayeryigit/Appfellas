@@ -1,67 +1,57 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import StoreContext from "../../../store";
+import FlightCard from "./flight-card/FlightCard";
 
 const FlightList = () => {
-  const { direction, setDirection } = useContext(StoreContext);
-  const [flights, setFlights] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [linkHeader, setLinkHeader] = useState("");
+  const { direction,allFlights,setAllFlights,filtered, setFiltered } = useContext(StoreContext);
 
-  const fetchFlights = async (page = 0) => {
+  const [oneWayFlights, setOneWayFlights] = useState([]); // Tek yön uçuşları
+  const [roundTripFlights, setRoundTripFlights] = useState([]); // Çift yön uçuşları
+  const [loading, setLoading] = useState(false); // Yüklenme durumu
+  const [currentPage, setCurrentPage] = useState(0); // Mevcut sayfa
+
+  const filterFlightsByDirection = (flights, direction) => {
+    return flights.filter((flight) => flight.flightDirection === direction);
+  };
+
+  // Uçuş verilerini backend'den çekme fonksiyonu
+  const fetchFlights = async () => {
     setLoading(true);
     try {
-      const response = await axios.get('http://localhost:5000/api/flights', {
+      const response = await axios.get("http://localhost:5000/api/flights", {
         params: {
-          page: page,
-          direction: direction 
-        }
+          page: currentPage,
+        },
       });
-      setFlights(response.data.flights);
-      setLinkHeader(response.data.linkHeader);
+
+      const flights = response.data.flights; // Tüm uçuşları al
+
+      {
+        {
+          setAllFlights(flights);
+        }
+      }
     } catch (error) {
-      console.error('Error fetching flights:', error);
+      console.error("Error fetching flights:", error);
     } finally {
       setLoading(false);
     }
   };
 
+  // Uçuş verilerini çek
   useEffect(() => {
-    fetchFlights(); // Varsayılan olarak sayfa 0 ile verileri çek
-  }, [direction]);
+    fetchFlights();
+  }, [currentPage]);
 
+  useEffect(() => {
+   // console.log(oneWayFlights);
+    //console.log(roundTripFlights);
+  }, [oneWayFlights, roundTripFlights]);
+
+  // Sayfa değişim fonksiyonu
   const handlePageChange = (newPage) => {
-    fetchFlights(newPage); // Sayfa değiştiğinde verileri çek
-  };
-
-  const renderPagination = () => {
-    if (linkHeader) {
-      const links = linkHeader.split(', ');
-      let nextPage = null;
-      let prevPage = null;
-
-      links.forEach(link => {
-        if (link.includes('rel="next"')) {
-          nextPage = getPageNumber(link);
-        } else if (link.includes('rel="prev"')) {
-          prevPage = getPageNumber(link);
-        }
-      });
-
-      return (
-        <div>
-          {prevPage && <button onClick={() => handlePageChange(prevPage)}>Önceki</button>}
-          {nextPage && <button onClick={() => handlePageChange(nextPage)}>Sonraki</button>}
-        </div>
-      );
-    }
-    return null;
-  };
-
-  const getPageNumber = (link) => {
-    const url = link.split(';')[0].slice(1, -1); // URL'yi al
-    const params = new URLSearchParams(url.split('?')[1]);
-    return params.get('page'); // Sayfa numarasını döndür
+    setCurrentPage(newPage);
   };
 
   return (
@@ -69,23 +59,47 @@ const FlightList = () => {
       {loading ? (
         <p>Yükleniyor...</p>
       ) : (
-        <ul>
-          {flights.length > 0 ? (
-            flights.map((flight, index) => (
-              <li key={index}>
-                <strong>Uçuş Numarası:</strong> {flight.flightNumber} - 
-                <strong> Uçuş Yönü:</strong> {flight.flightDirection} -
-                <strong> Kalkış Zamanı:</strong> {flight.scheduleTime}
-              </li>
-            ))
-          ) : (
-            <p>Uçuş bulunamadı.</p>
-          )}
-        </ul>
+        <>
+          {
+            <div>
+              <h2>Tüm Uçuşlar</h2>
+              <ul>
+                {filtered.length > 0 ? (
+                 filtered.map((flight, index) => (
+                  <FlightCard
+                  key={flight.id}
+                  from={flight.route.destinations[0] || 'Bilinmiyor'}
+                  to={flight.prefixICAO || 'Bilinmiyor'}
+                  price={`$${flight.flightNumber}`}
+                  departureTime={flight.scheduleTime || 'Bilinmiyor'}
+                  arrivalTime={flight.estimatedLandingTime || 'Bilinmiyor'}
+                  airline={flight.airlineCode || 'Bilinmiyor'}
+                />
+                  ))
+                ) : (
+                  <p>Uçuş bulunamadı.</p>
+                )}
+              </ul>{" "}
+            </div>
+          }
+
+          {/* Sayfalandırma düğmeleri */}
+          <div className="d-flex justify-content-center gap-1">
+            <button
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 0}
+            >
+              Önceki
+            </button>
+            <button onClick={() => handlePageChange(currentPage + 1)}>
+              Sonraki
+            </button>
+          </div>
+        </>
       )}
-      {renderPagination()} {/* Sayfalandırma düğmelerini render et */}
     </div>
   );
 };
 
 export default FlightList;
+

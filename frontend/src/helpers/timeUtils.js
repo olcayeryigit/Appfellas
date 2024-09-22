@@ -68,3 +68,13 @@ export function calculateTimeDifference(startTime, endTime) {
 
   return `${diffHours}h ${diffMinutes}m`;
 }
+
+/**************** */
+export function formatDate(inputDate) {
+  const date = new Date(inputDate); // Tarihi Date nesnesine çevir
+  const month = String(date.getMonth() + 1).padStart(2, '0'); // Ayı al (0'dan başlar)
+  const day = String(date.getDate()).padStart(2, '0'); // Günü al
+  const year = date.getFullYear(); // Yılı al
+
+  return `${month}/${day}/${year}`; // İstenilen formatta döndür
+}

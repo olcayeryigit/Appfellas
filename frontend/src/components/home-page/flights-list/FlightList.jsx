@@ -2,10 +2,10 @@ import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import StoreContext from "../../../store";
 import FlightCard from "./flight-card/FlightCard";
-import "./flight-list.css"
+import "./flight-list.css";
 
 const FlightList = () => {
-  const { allFlights, filtered, setAllFlights, setFiltered } = useContext(StoreContext);
+  const { allFlights, filteredFlights, setAllFlights, setFilteredFlights } = useContext(StoreContext);
   const [loading, setLoading] = useState(false); // Yüklenme durumu
   const [currentPage, setCurrentPage] = useState(0); // Mevcut sayfa
 
@@ -21,6 +21,7 @@ const FlightList = () => {
 
       const flights = response.data.flights; // Tüm uçuşları al
       setAllFlights(flights);
+      setFilteredFlights(flights); // İlk başta tüm uçuşları filtrele
     } catch (error) {
       console.error("Error fetching flights:", error);
     } finally {
@@ -38,6 +39,9 @@ const FlightList = () => {
     setCurrentPage(newPage);
   };
 
+  // filtered kontrolü
+  const displayFlights = Array.isArray(filteredFlights) && filteredFlights.length > 0 ? filteredFlights : [];
+
   return (
     <div>
       {loading ? (
@@ -47,13 +51,13 @@ const FlightList = () => {
           <div className="scroll-container">
             <h2>Tüm Uçuşlar</h2>
             <ul>
-              {filtered.length > 0 ? (
-                filtered.map((flight) => (
+              {displayFlights.length > 0 ? (
+                displayFlights.map((flight) => (
                   <FlightCard
                     key={flight.id}
                     from={flight.route.destinations[0] || "Bilinmiyor"}
                     to={flight.prefixICAO || "Bilinmiyor"}
-                    price={`$${flight.flightNumber}`}
+                    price="500"
                     departureTime={flight.scheduleTime || "Bilinmiyor"}
                     arrivalTime={flight.estimatedLandingTime || "Bilinmiyor"}
                     airline={flight.airlineCode || "Bilinmiyor"}

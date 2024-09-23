@@ -1,78 +1,59 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import FlightCard from '../home-page/flights-list/flight-card/FlightCard';
+import axios from 'axios';
 
 const MyFlightsPage = () => {
-    // Example flight data can be added here
-    const flights = [
-        {
-            time: "7:40 AM - 9:12 AM",
-            airline: "Delta Air Lines",
-            flightNumber: "DL 1443",
-            duration: "1h 32m",
-            priceMain: "$156",
-            priceComfort: "$204",
-            priceFirst: "$386"
-        },
-        {
-            time: "7:00 AM - 8:52 AM",
-            airline: "American Airlines",
-            flightNumber: "AA 166",
-            duration: "1h 52m",
-            priceMain: "$182",
-            priceComfort: "",
-            priceFirst: "$400"
-        }
-        // Add more flights here
-    ];
+  const [myFlights, setMyFlights] = useState([]); // Uçuşlar için state
 
-    return (
-        <div style={{ backgroundColor: '#e6f4ff' }}>
-            <div className="container">
-                <header className="header">
-                    <h1>My Flights</h1>
-                    <div className="filter-options">
-                        <button>Times</button>
-                        <button>Stops</button>
-                        <button>Airlines</button>
-                        <button>Airports</button>
-                        <button>Amenities</button>
-                        <button>Edit Search</button>
-                    </div>
-                </header>
+  useEffect(() => {
+    const fetchMyFlights = async () => {
+      try {
+        // Veritabanından uçuşları çekme
+        const response = await axios.get('http://localhost:5000/api/myflights'); // Yeni endpoint
+        setMyFlights(response.data); // Uçuş verilerini state'e kaydet
+      } catch (error) {
+        console.error('Error fetching flights:', error);
+      }
+    };
 
-                <div className="flight-results">
-                    {flights.map((flight, index) => (
-                        <FlightCard
-                            key={index}
-                            time={flight.time}
-                            airline={flight.airline}
-                            flightNumber={flight.flightNumber}
-                            duration={flight.duration}
-                            priceMain={flight.priceMain}
-                            priceComfort={flight.priceComfort}
-                            priceFirst={flight.priceFirst}
-                        />
-                    ))}
-                </div>
-            </div>
+    fetchMyFlights(); // Uçuşları çek
+  }, []); // Bileşen yüklendiğinde çalışır
+
+  if (!Array.isArray(myFlights) || myFlights.length === 0) {
+    return <div>No flights available</div>; // Uçuş yoksa mesaj göster
+  }
+
+  return (
+    <div style={{ backgroundColor: '#e6f4ff' }}>
+      <div className="container">
+        <header className="header">
+          <h1>My Flights</h1>
+          <div className="filter-options">
+            <button>Times</button>
+            <button>Stops</button>
+            <button>Airlines</button>
+            <button>Airports</button>
+            <button>Amenities</button>
+            <button>Edit Search</button>
+          </div>
+        </header>
+
+        <div className="flight-results">
+          {myFlights.map((flight, index) => (
+            <FlightCard
+              key={index}
+              from={flight.departure}      // Gerekli alanlar
+              to={flight.arrival}
+              price={flight.price}
+              departureTime={flight.departureTime}
+              arrivalTime={flight.arrivalTime}
+              airline={flight.airline}
+            />
+          ))}
         </div>
-    );
-};
-
-const FlightCard = ({ time, airline, flightNumber, duration, priceMain, priceComfort, priceFirst }) => {
-    return (
-        <div className="flight-card">
-            <div className="flight-details">
-                <p><strong>Time:</strong> {time}</p>
-                <p><strong>Airline:</strong> {airline} ({flightNumber})</p>
-                <p><strong>Duration:</strong> {duration}</p>
-            </div>
-            <div className="price-options">
-                <p><strong>Main:</strong> {priceMain}</p>
-                <p><strong>Comfort+:</strong> {priceComfort}</p>
-                <p><strong>First:</strong> {priceFirst}</p>
-            </div>
-        </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default MyFlightsPage;

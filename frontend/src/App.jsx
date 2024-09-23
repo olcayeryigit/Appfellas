@@ -5,10 +5,22 @@ import AppRouter from "./router/index";
 function App() {
   const [direction, setDirection] = useState('D'); // Uçuş yönü
   const [allFlights, setAllFlights] = useState([]); // Tüm uçuşlar
-  const [filtered, setFiltered] = useState([]); // Filtrelenmiş uçuşlar
+  const [filteredFlights, setFilteredFlights] = useState([]); // Burada ismi kontrol edin
+  const [myFlights, setMyFlights] = useState([]); // Uçuşlarım
+  const [filtered, setFiltered] = useState([]); // Uçuşlarım
 
   return (
-    <StoreContext.Provider value={{ direction, setDirection, allFlights, setAllFlights, filtered, setFiltered }}>
+    <StoreContext.Provider value={{ 
+      direction, 
+      setDirection, 
+      allFlights, 
+      setAllFlights, 
+      filteredFlights, 
+      setFilteredFlights,
+      filtered,setFiltered,
+      myFlights, 
+      setMyFlights 
+    }}>
       <AppRouter />
     </StoreContext.Provider>
   );

@@ -47,7 +47,7 @@ const FlightList = () => {
         
       ) : (
         <>
-          <div className="scroll-container mt-3 pe-3">
+          <div className="scroll-container mt-3 ">
             <div className="">
               {displayFlights.length > 0 ? (
                 displayFlights.map((flight) => (

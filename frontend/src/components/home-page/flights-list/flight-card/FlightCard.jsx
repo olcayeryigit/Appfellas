@@ -58,7 +58,7 @@ const FlightCard = ({
           <div>
             <div className="align-items-center">
               <TbPlaneDeparture />
-              <small>Departure</small>
+              <div>Departure</div>
             </div>
             <div className="fw-bold">{formatDepartureTime}</div>
             <div>{from}</div>
@@ -79,7 +79,7 @@ const FlightCard = ({
           <div className="mb-3">
             <div className="align-items-center">
               <TbPlaneArrival />
-              <small>Arrival</small>
+              <div>Arrival</div>
             </div>
             <div className="fw-bold">{formatArrivalTime}</div>
             <div>{to}</div>

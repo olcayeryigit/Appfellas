@@ -10,7 +10,7 @@ import { formatDate } from "../../../helpers/timeUtils";
 
 // İkonlu Giriş Bileşeni
 
-const SearchBar= () => {
+const SearchBar = () => {
   const { direction, setDirection, allFlights, setFiltered } =
     useContext(StoreContext);
   const [roundTripClassName, setRoundTripClassName] = useState("bg-4");
@@ -59,6 +59,7 @@ const SearchBar= () => {
 
   const handleClickShowFlights = () => {
     setShowClick((prev) => !prev);
+    setFiltered(filterFlights(allFlights)); // Filtreleme işlemini hemen yap
   };
 
   const handleClearFilters = () => {
@@ -70,12 +71,6 @@ const SearchBar= () => {
     setFiltered(allFlights);
     setShowClick(false);
   };
-
-  useEffect(() => {
-    if (showClick) {
-      setFiltered(filterFlights(allFlights));
-    }
-  }, [showClick]);
 
   useEffect(() => {
     if (!showClick) {
@@ -110,13 +105,15 @@ const SearchBar= () => {
             <div className="icon-div-1 d-flex align-items-center">
               <MdFlightLand className="icon icon-1" />
             </div>
-            <input className="input input-1 w-100"
+            <input
+              className="input input-1 w-100"
               value={departureLocation}
               onChange={(e) => setDepartureLocation(e.target.value)}
             />{" "}
           </div>
           <div className="input-div-2 d-flex align-items-center">
-            <input className="input input-2 w-100"
+            <input
+              className="input input-2 w-100"
               value={arrivalLocation}
               onChange={(e) => setArrivalLocation(e.target.value)}
             />
@@ -153,7 +150,7 @@ const SearchBar= () => {
 
       <div className="mt-3">
         <Button
-          className="btn-1 rounded-3 bg-4 me-2"
+          className="btn-show rounded-3 bg-4 me-2"
           onClick={handleClickShowFlights}
         >
           Show Flights

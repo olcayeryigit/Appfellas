@@ -48,17 +48,17 @@ const FlightCard = ({
     console.log(typeof airline)
   };
   return (
-    <div>
-      <div className="flight-card">
+    <div className="mb-3">
+      <div className="flight-card w-100 ">
         <h5 className="ps-3 pt-3">
           {from} to {to}
         </h5>
 
-        <div className="d-flex justify-content-between align-items-center px-3">
+        <div className="d-flex justify-content-between align-items-center px-3 ">
           <div>
             <div className="align-items-center">
               <TbPlaneDeparture />
-              <div>Departure</div>
+              <small>Departure</small>
             </div>
             <div className="fw-bold">{formatDepartureTime}</div>
             <div>{from}</div>
@@ -79,7 +79,7 @@ const FlightCard = ({
           <div className="mb-3">
             <div className="align-items-center">
               <TbPlaneArrival />
-              <div>Arrival</div>
+              <small>Arrival</small>
             </div>
             <div className="fw-bold">{formatArrivalTime}</div>
             <div>{to}</div>

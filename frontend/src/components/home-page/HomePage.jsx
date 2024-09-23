@@ -3,10 +3,9 @@ import React, { useState, useEffect, useContext } from "react";
 import "./home-page.css";
 import { Col, Container, Row } from "react-bootstrap";
 import Topbar from "./topbar/TopBar";
-import SearchBar from "./search-bar/SearchBar";
-import Right from "./right/Right";
-import SearchBox from "./search-box/SearchBox";
 import FlightList from "./flights-list/FlightList";
+import ImageSideBar from "./image-side-bar/ImageSideBar";
+import SearchBar from "./search-bar/SearchBar";
 
 const images = [
   { src: "/images/img-1.jpg" },
@@ -16,48 +15,24 @@ const images = [
 
 const HomePage = () => {
   return (
-    <div className="bg-1 p-5">
-      <Container className="bg-2 my-3 rounded-4 p-3">
+    <Container fluid className="home-container d-flex justify-content-center bg-1 py-5 ">
+      <Container className="bg-2 w-75 rounded-4 ps-4 pe-0 pt-2 ">
         <Topbar username="Olcay Eryiğit" />
-        <Row className="p-3 m-0 ">
-          <Col md={9}>
-            <SearchBox />
-
-            <Row className="m-0 mt-5">
-              <Col md={8} className="p-0">
-            <FlightList/>
-              </Col>
-              <Col md={4} className="p-0 mt-4">
-                <SearchBar />
-              </Col>
-            </Row>
+        <Row className="py-2 m-0 px-0">
+          <Col md={8} className="px-0">
+            <SearchBar />
+ <FlightList/>
+          
           </Col>
 
-          <Col md={3}>
-            <Right images={images}/>
+          <Col md={4} className="p-0 m-0">
+            <ImageSideBar images={images}/>
           </Col>
         </Row>
       </Container>
-    </div>
+    </Container>
   );
 };
 
 export default HomePage;
 
-/* <div className="flight-results">
-{flights.length > 0 ? (
-  flights.map((flight) => (
-    <FlightCard
-      key={flight.id}
-      from={flight.route.destinations[0] || "Unknown"}
-      to={flight.prefixICAO || "Unknown"}
-      price={`$${flight.flightNumber}`} // Placeholder, adjust as necessary
-      departureTime={flight.scheduleTime || "Unknown"}
-      arrivalTime={flight.estimatedLandingTime || "Unknown"}
-      airline={flight.airlineCode || "Unknown"}
-    />
-  ))
-) : (
-  <p>No flights available</p>
-)}
-</div>*/

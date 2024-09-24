@@ -53,5 +53,5 @@ Backend uygulaması, http://localhost:3000 üzerinde çalışan bir API'ye proxy
 Uygulama Arayüzü Ekran Görselleri
 ![2](https://github.com/user-attachments/assets/78a71ef4-24a3-43be-8d1c-f16d01a98f95)
 ![1](https://github.com/user-attachments/assets/14dfa7f3-d8cb-472e-8c65-2d577aa07fd0)
-![4](https://github.com/user-attachments/assets/e734d94d-edd8-42d7-b830-56d70503276f)
 ![3](https://github.com/user-attachments/assets/576832ba-0b21-4519-bacc-d1c4ab1bb79d)
+![4](https://github.com/user-attachments/assets/e734d94d-edd8-42d7-b830-56d70503276f)

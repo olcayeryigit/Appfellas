@@ -51,3 +51,7 @@ Proje Konfigürasyonu
 Backend uygulaması, http://localhost:3000 üzerinde çalışan bir API'ye proxy ayarına sahiptir. Frontend uygulaması, API ile iletişim kurmak için bu proxy ayarını kullanır
 
 Uygulama Arayüzü Ekran Görselleri
+![1](https://github.com/user-attachments/assets/564c9632-9e8c-4467-acb9-b40fbdf6271f)
+![2](https://github.com/user-attachments/assets/22b48155-8e78-4bbf-be83-aaefe1c416d9)
+![3](https://github.com/user-attachments/assets/80072a9a-0afa-40ac-916e-3f3dd144fd0b)
+![4](https://github.com/user-attachments/assets/42042b89-07be-47f2-bf4e-1455edb6ac18)

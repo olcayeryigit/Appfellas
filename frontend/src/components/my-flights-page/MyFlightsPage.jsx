@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import FlightCard from '../home-page/flights-list/flight-card/FlightCard';
 import axios from 'axios';
+import MyFlightCard from './my-flight-card/MyFlightCard';
 
 const MyFlightsPage = () => {
   const [myFlights, setMyFlights] = useState([]); // Uçuşlar için state
@@ -24,23 +24,14 @@ const MyFlightsPage = () => {
   }
 
   return (
-    <div style={{ backgroundColor: '#e6f4ff' }}>
+    <div className='py-2 vh-100' style={{ backgroundColor: '#e6f4ff' }}>
+        <a style={{color:"var(--color1)"}} className="text-center d-block link-home" href="/">Home </a>
       <div className="container">
-        <header className="header">
-          <h1>My Flights</h1>
-          <div className="filter-options">
-            <button>Times</button>
-            <button>Stops</button>
-            <button>Airlines</button>
-            <button>Airports</button>
-            <button>Amenities</button>
-            <button>Edit Search</button>
-          </div>
-        </header>
+      
 
         <div className="flight-results">
           {myFlights.map((flight, index) => (
-            <FlightCard
+            <MyFlightCard
               key={index}
               from={flight.departure}      // Gerekli alanlar
               to={flight.arrival}

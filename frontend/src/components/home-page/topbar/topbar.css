@@ -1,3 +1,7 @@
 .icon{
-color:  var(--color1);;
+color:  var(--color1);
+}
+
+.link-my-flights{
+    color: var(--color1);
 }

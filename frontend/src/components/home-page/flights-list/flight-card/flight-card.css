@@ -30,3 +30,9 @@
 .flight-icon {
     color: var(--color1);
 }
+.line {
+  width: 100px;
+  height: 2px; /* Çizginin kalınlığı */
+  background-color: black; /* Çizginin rengi */
+  margin: 20px 0; /* Üst ve alt boşluk */
+}

@@ -15,17 +15,17 @@ const images = [
 
 const HomePage = () => {
   return (
-    <Container fluid className="home-container d-flex justify-content-center bg-1 py-5  ">
-      <Container className="bg-2 w-75 rounded-4 ps-4 pe-0 pt-2">
+    <Container fluid className="home-container d-flex justify-content-center bg-1">
+      <Container className="bg-2 w-75 rounded-4 ps-4 pe-0 pt-2 shadow-lg ">
         <Topbar username="Olcay Eryiğit" />
-        <Row className="py-2 m-0 px-0">
-          <Col md={9} className="px-0">
+        <Row className="py-2 m-0 px-0 ">
+          <Col lg={9}  className="px-0 ">
             <SearchBar />
  <FlightList/>
           
           </Col>
 
-          <Col md={3} className="p-0 m-0">
+          <Col lg={3}  className="p-0 m-0">
             <ImageSideBar images={images}/>
           </Col>
         </Row>

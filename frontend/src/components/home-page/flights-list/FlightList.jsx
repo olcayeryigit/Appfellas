@@ -19,7 +19,7 @@ const FlightList = () => {
       });
 
       const flights = response.data.flights;
-      console.log(flights)
+      console.log(flights);
       setAllFlights(flights);
     } catch (error) {
       console.error("Error fetching flights:", error);
@@ -36,28 +36,28 @@ const FlightList = () => {
     setCurrentPage(newPage);
   };
 
-  const displayFlights = Array.isArray(filtered) && filtered.length > 0 ? filtered : [];
+  const displayFlights = Array.isArray(filtered) && filtered.length > 0 ? filtered : allFlights; // Tüm uçuşları göster
 
   return (
-    <div className="">
+    <div className="pt-3">
       {loading ? ( // Yükleme durumunu kontrol et
-      <div className="text-center">
-        <Spinner animation="border" />
-      </div>
-        
+        <div className="text-center">
+          <Spinner animation="border" />
+        </div>
       ) : (
         <>
-          <div className="scroll-container mt-3 ">
-            <div className="">
+          <div className="scroll-container mt-3">
+            <div>
               {displayFlights.length > 0 ? (
                 displayFlights.map((flight) => (
                   <FlightCard
                     key={flight.id}
-                    from={flight.route.destinations[0] || "Bilinmiyor"}
-                    to={flight.prefixICAO || "Bilinmiyor"}
-                    price="500"
-                    departureTime={flight.scheduleTime || "Bilinmiyor"}
-                    arrivalTime={flight.estimatedLandingTime || "Bilinmiyor"}
+                    departure={flight.route.destinations[0] || 
+                       "Bilinmiyor"} // 'from' yerine 'departure'
+                    arrival={flight.route.destinations[1] || "Bilinmiyor"} // 'to' yerine 'arrival'
+                    price="500" // Fiyatı burada belirtiyoruz
+                    departureTime={flight.scheduleDateTime || flight.actualOffBlockTime || "Bilinmiyor"}
+                    arrivalTime={flight.estimatedLandingTime || flight.actualLandingTime || "Bilinmiyor"}
                     airline={flight.airlineCode || "Bilinmiyor"}
                   />
                 ))
@@ -67,16 +67,18 @@ const FlightList = () => {
             </div>
           </div>
 
-          <div className="d-flex justify-content-center gap-2 my-4">
-            <Button variant="" className="btn-next-prev rounded-0 bg-white "
+          <div className="button-group text-center">
+            <Button variant="" className="btn-next-prev rounded-0 bg-white"
               onClick={() => handlePageChange(currentPage - 1)}
               disabled={currentPage === 0}
             >
-            Previous
+              Previous
             </Button>
-            <Button variant="" className="btn-next-prev rounded-0 bg-white "
-             onClick={() => handlePageChange(currentPage + 1)}>
-Next            </Button>
+            <Button variant="" className="btn-next-prev rounded-0 bg-white"
+              onClick={() => handlePageChange(currentPage + 1)}
+            >
+              Next
+            </Button>
           </div>
         </>
       )}

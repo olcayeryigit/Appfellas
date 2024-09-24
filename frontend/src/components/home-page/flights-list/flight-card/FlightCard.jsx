@@ -8,11 +8,11 @@ import {
 import { TbPlaneArrival, TbPlaneDeparture } from "react-icons/tb";
 import { Button } from "react-bootstrap";
 import { IoAirplaneSharp } from "react-icons/io5";
-import axios from 'axios'; // Axios'u import et
+import axios from "axios"; // Axios'u import et
 
 const FlightCard = ({
-  from,
-  to,
+  departure,
+  arrival,
   price,
   departureTime,
   arrivalTime,
@@ -20,51 +20,44 @@ const FlightCard = ({
 }) => {
   const formatDepartureTime = formatDateTimeTo12Hour(departureTime);
   const formatArrivalTime = formatDateTimeTo12Hour(arrivalTime);
-  const dateDepartureTime = parse12HourTimeTo24Hour(formatDepartureTime);
-  const dateArrivalTime = parse12HourTimeTo24Hour(formatArrivalTime);
   const timeDifference = calculateTimeDifference(departureTime, arrivalTime);
 
   // Uçuşu kaydetmek için fonksiyon
   const handleBookFlight = async () => {
     try {
       const response = await axios.post("http://localhost:5000/api/flights/book", {
-        from,
-        to,
+        departure,
+        arrival,
         price,
         departureTime,
         arrivalTime,
         airline,
       });
-      // ...
+      alert('Flight booked successfully!'); // Başarılı booking durumu
     } catch (error) {
       console.error('Error booking flight:', error);
       alert('Failed to book flight. Please try again.');
     }
-    console.log(typeof from)
-    console.log(typeof to)
-    console.log(typeof price)
-    console.log(typeof departureTime)
-    console.log(typeof arrivalTime)
-    console.log(typeof airline)
   };
+
   return (
     <div className="mb-3">
-      <div className="flight-card w-100 ">
+      <div className="flight-card w-100">
         <h5 className="ps-3 pt-3">
-          {from} to {to}
+          {departure} to {arrival}
         </h5>
 
-        <div className="d-flex justify-content-between align-items-center px-3 ">
+        <div className="d-flex justify-content-between align-items-center px-3">
           <div>
             <div className="align-items-center">
               <TbPlaneDeparture />
               <div>Departure</div>
             </div>
             <div className="fw-bold">{formatDepartureTime}</div>
-            <div>{from}</div>
+            <div>{departure}</div>
           </div>
 
-          <div>-</div>
+          <div className="line"></div>
 
           <div>
             <img className="airlines-icon" src="/images/image-1.png" alt="airline" />
@@ -74,7 +67,7 @@ const FlightCard = ({
             <div>{timeDifference}</div>
           </div>
 
-          <div>-</div>
+          <div className="line"></div>
 
           <div className="mb-3">
             <div className="align-items-center">
@@ -82,7 +75,7 @@ const FlightCard = ({
               <div>Arrival</div>
             </div>
             <div className="fw-bold">{formatArrivalTime}</div>
-            <div>{to}</div>
+            <div>{arrival}</div>
           </div>
         </div>
 

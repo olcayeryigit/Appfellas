@@ -9,9 +9,8 @@ const Topbar = ({ username }) => {
     <header className="header d-flex justify-content-between align-items-center pe-4">
       <h4>PLANE SCAPE</h4>
 
-      <a href="/">Home</a>
 
-      <a href="/myFlights">My Flights</a>
+      <a className="link-my-flights" href="/myFlights">My Flights</a>
 
       <div className="d-flex gap-3 align-items-center ">
         <div className="d-flex align-items-center">

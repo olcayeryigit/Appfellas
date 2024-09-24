@@ -13,6 +13,20 @@ Bu proje, bir uçuş rezervasyon sistemi oluşturmak için tasarlanmıştır. Pr
 - **[express](https://expressjs.com/)**: Node.js üzerinde web uygulamaları geliştirmek için minimal ve esnek bir framework.
 - **[mongoose](https://mongoosejs.com/)**: MongoDB ile etkileşimde bulunmak için kullanılan bir ODM (Object Data Modeling) kütüphanesi.
 
+
+## Frontend
+
+## Bağımlılıklar
+
+- **axios:** API istekleri yapmak için.
+- **bootstrap:** Hızlı ve kolay bir şekilde modern web sayfaları tasarlamak için.
+- **react:**  Kullanıcı arayüzleri oluşturmak için kullanılan bir kütüphane.
+- **react-bootstrap:** Bootstrap bileşenlerini React uygulamalarında kullanmak için.
+- **react-datepicker:** Tarih seçimi için bir bileşen.
+- **react-dom:** React bileşenlerini DOM'a yerleştirmek için.
+- **react-icons:** İkonlar için.
+- **react-router-dom:** React uygulamaları için yönlendirme desteği.
+
 ### Kurulum
 
 1. Backend dizinine gidin:
@@ -25,17 +39,7 @@ npm install
 Sunucuyu başlatın:
 node server.js
 
-Frontend
-Bağımlılıklar
 
-axios: API istekleri yapmak için.
-bootstrap: Hızlı ve kolay bir şekilde modern web sayfaları tasarlamak için.
-react: Kullanıcı arayüzleri oluşturmak için kullanılan bir kütüphane.
-react-bootstrap: Bootstrap bileşenlerini React uygulamalarında kullanmak için.
-react-datepicker: Tarih seçimi için bir bileşen.
-react-dom: React bileşenlerini DOM'a yerleştirmek için.
-react-icons: İkonlar için.
-react-router-dom: React uygulamaları için yönlendirme desteği.
 Kurulum
 
 Frontend dizinine gidin:

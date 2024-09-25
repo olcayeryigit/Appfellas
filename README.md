@@ -1,3 +1,5 @@
+Bu proje **hala geliştirme aşamasındadır**. Projeye dair yeni özellikler ve iyileştirmeler eklenmeye devam etmektedir.
+
 
 # Uçuş Rezervasyon Sistemi
 
